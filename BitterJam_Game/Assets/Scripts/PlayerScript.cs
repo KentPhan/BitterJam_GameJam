@@ -8,6 +8,8 @@ public class PlayerScript : MonoBehaviour
 
     public float m_Distance = 200;
 
+    public float m_CameraSpeed = 100.0f;
+
     private Camera m_Camera;
 
     private int m_ShitStainMask;
@@ -22,9 +24,10 @@ public class PlayerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        float l_deltaTime = Time.deltaTime;
+
         if (Input.GetMouseButton(0))
         {
-
             Vector3 l_MousePosition = Input.mousePosition;
 
             Ray l_Ray = m_Camera.ScreenPointToRay(l_MousePosition);
@@ -33,10 +36,15 @@ public class PlayerScript : MonoBehaviour
             {
                 Destroy(l_Hit.collider.gameObject);
             }
-            Debug.Log("Drawing Line" + l_Ray);
+            //Debug.Log("Drawing Line" + l_Ray);
 
-            Debug.DrawRay(l_Ray.origin, l_Ray.direction * m_Distance);
+            //Debug.DrawRay(l_Ray.origin, l_Ray.direction * m_Distance);
 
         }
+
+        transform.position = transform.position + Input.GetAxis("Horizontal") * transform.right * m_CameraSpeed * l_deltaTime;
+        transform.position = transform.position + Input.GetAxis("Vertical") * transform.up * m_CameraSpeed * l_deltaTime;
+        transform.LookAt(Target.transform);
+
     }
 }
