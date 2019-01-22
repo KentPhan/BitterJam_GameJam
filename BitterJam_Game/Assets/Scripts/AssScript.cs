@@ -16,13 +16,13 @@ public class AssScript : MonoBehaviour
 
     }
 
-    public void OnParticleCollision(GameObject other)
-    {
-        if (other.CompareTag("ShitParticle"))
-        {
+    //public void OnParticleCollision(GameObject other)
+    //{
+    //    if (other.CompareTag("ShitParticle"))
+    //    {
 
-        }
-    }
+    //    }
+    //}
 
     public void TakeAShit()
     {

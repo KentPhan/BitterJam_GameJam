@@ -8,8 +8,11 @@ public class ShitExplosionScript : MonoBehaviour
     [SerializeField] private GameObject m_ShitStainPrefab;
 
     private ParticleSystem m_ParticleSystem;
+    public Transform ShitParent;
 
     private ParticleCollisionEvent[] m_CollisionEvents;
+
+    private GameCanvasManager m_GameManager;
 
     private void Awake()
     {
@@ -20,12 +23,18 @@ public class ShitExplosionScript : MonoBehaviour
     void Start()
     {
         m_CollisionEvents = new ParticleCollisionEvent[20];
+        m_GameManager = GameCanvasManager.Instance;
     }
 
     // Update is called once per frame
     void Update()
     {
 
+    }
+
+    public void Shard()
+    {
+        m_ParticleSystem.Play();
     }
 
     public void OnParticleCollision(GameObject other)
@@ -40,7 +49,8 @@ public class ShitExplosionScript : MonoBehaviour
         for (int i = 0; i < eventCount; i++)
         {
             //Debug.Log(other.tag);
-            Instantiate(m_ShitStainPrefab, m_CollisionEvents[i].intersection, Quaternion.AngleAxis(90, Vector3.up) * Quaternion.LookRotation(m_CollisionEvents[i].normal, m_CollisionEvents[i].normal), other.transform);
+            m_GameManager.IncreaseMess(1);
+            Instantiate(m_ShitStainPrefab, m_CollisionEvents[i].intersection, Quaternion.AngleAxis(90, Vector3.up) * Quaternion.LookRotation(m_CollisionEvents[i].normal, m_CollisionEvents[i].normal), ShitParent);
 
             //TODO: Do your collision stuff here. 
             // You can access the CollisionEvent[i] to obtain point of intersection, normals that kind of thing

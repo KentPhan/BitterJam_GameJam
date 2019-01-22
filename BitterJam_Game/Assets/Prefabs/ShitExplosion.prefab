@@ -49,7 +49,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 1
@@ -976,7 +976,7 @@ ParticleSystem:
       countCurve:
         serializedVersion: 2
         minMaxState: 0
-        scalar: 200
+        scalar: 500
         minScalar: 30
         maxCurve:
           serializedVersion: 2
@@ -4771,3 +4771,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ShitStainPrefab: {fileID: 1570629698438453664, guid: 7459c337268db6a4eb33c90be0114f8e,
     type: 3}
+  ShitParent: {fileID: 0}

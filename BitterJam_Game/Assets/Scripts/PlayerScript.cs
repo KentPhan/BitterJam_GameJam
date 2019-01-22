@@ -14,11 +14,14 @@ public class PlayerScript : MonoBehaviour
 
     private int m_ShitStainMask;
 
+    private GameCanvasManager m_GameManager;
+
     // Start is called before the first frame update
     void Start()
     {
         m_Camera = GetComponent<Camera>();
         m_ShitStainMask = LayerMask.GetMask("ShitStain");
+        m_GameManager = GameCanvasManager.Instance;
     }
 
     // Update is called once per frame
@@ -26,21 +29,26 @@ public class PlayerScript : MonoBehaviour
     {
         float l_deltaTime = Time.deltaTime;
 
-        if (Input.GetMouseButton(0))
+        if (m_GameManager.GetState() == GameStates.PLAY)
         {
-            Vector3 l_MousePosition = Input.mousePosition;
-
-            Ray l_Ray = m_Camera.ScreenPointToRay(l_MousePosition);
-            RaycastHit l_Hit;
-            if (Physics.Raycast(l_Ray, out l_Hit, 200, m_ShitStainMask, QueryTriggerInteraction.Collide))
+            if (Input.GetMouseButton(0))
             {
-                Destroy(l_Hit.collider.gameObject);
+                Vector3 l_MousePosition = Input.mousePosition;
+
+                Ray l_Ray = m_Camera.ScreenPointToRay(l_MousePosition);
+                RaycastHit l_Hit;
+                if (Physics.Raycast(l_Ray, out l_Hit, 200, m_ShitStainMask, QueryTriggerInteraction.Collide))
+                {
+                    m_GameManager.IncreaseScore(1);
+                    m_GameManager.IncreaseMess(-1);
+                    Destroy(l_Hit.collider.gameObject);
+                }
+                //Debug.Log("Drawing Line" + l_Ray);
+                //Debug.DrawRay(l_Ray.origin, l_Ray.direction * m_Distance);
+
             }
-            //Debug.Log("Drawing Line" + l_Ray);
-
-            //Debug.DrawRay(l_Ray.origin, l_Ray.direction * m_Distance);
-
         }
+
 
         transform.position = transform.position + Input.GetAxis("Horizontal") * transform.right * m_CameraSpeed * l_deltaTime;
         transform.position = transform.position + Input.GetAxis("Vertical") * transform.up * m_CameraSpeed * l_deltaTime;
